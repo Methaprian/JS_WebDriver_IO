@@ -39,37 +39,37 @@ describe('Leads Module',()=>{
     it('Launch Browser and Login',async ()=>{
         await browser.maximizeWindow()
         await browser.url('http://testingserver:8888/')
-        await console.log(browser.getTitle());
-        await expect(browser).toHaveTitleContaining('vtiger CRM 5 - Commercial Open Source CRM')
+        console.log(browser.getTitle());
+        expect(browser).toHaveTitleContaining('vtiger CRM 5 - Commercial Open Source CRM')
         
         const loginUN = await browser.$('[name="user_name"]')
-        await expect(loginUN).toBeEnabled()
+        expect(loginUN).toBeEnabled()
         await loginUN.setValue(adminUserName)
 
         const loginPWD = await browser.$('[name="user_password"]')
         // await expect(loginPWD).toBeDisabled()
-        await expect(loginPWD).toBeEnabled()
+        expect(loginPWD).toBeEnabled()
         await loginPWD.setValue(adminPassword)
 
         const loginButton = await browser.$('#submitButton')
-        await expect(loginButton).toBeEnabled()
+        expect(loginButton).toBeEnabled()
         await loginButton.waitForClickable()
         await loginButton.click()
 
-        await console.log(browser.getTitle());
-        await expect(browser).toHaveTitleContaining('Administrator - Home - vtiger CRM 5')
+        console.log(browser.getTitle());
+        expect(browser).toHaveTitleContaining('Administrator - Home - vtiger CRM 5')
     })
 
     it('Leads Module Operation',async ()=>{
         const LeadsLink=await browser.$('=Leads')
         await LeadsLink.click()
-        await console.log(browser.getTitle());
-        await expect(browser).toHaveTitleContaining('Administrator - Leads - vtiger CRM 5')
+        console.log(browser.getTitle());
+        expect(browser).toHaveTitleContaining('Administrator - Leads - vtiger CRM 5')
         
         const createLeadButton=await browser.$('aria/Create Lead...')       // ----> Using ARIA selector and "att" attribute
         await createLeadButton.click()
         const PageName=await browser.$('//span[text()="Creating New Lead"]')
-        await expect(PageName).toHaveTextContaining('Creating New Lead')
+        expect(PageName).toHaveTextContaining('Creating New Lead')
 
         const firstNameTF=await browser.$('[name="firstname"]')     // CSS Selector
         await firstNameTF.setValue(firstName)
@@ -84,19 +84,19 @@ describe('Leads Module',()=>{
         await saveButton.click()
 
         const leadValue=await browser.$('//td[text()="Lead No"]/..//td[@class="dvtCellInfo"][2]')
-        await expect(leadValue).toHaveTextContaining('')
+        expect(leadValue).toHaveTextContaining('')
 
         const editLead=await browser.$('[name="Edit"]')
-        await expect(editLead).toBeDisplayed()
+        expect(editLead).toBeDisplayed()
         await editLead.click()
 
         const phoneTF=await browser.$('#phone')
-        await expect(phoneTF).toBeEnabled()
+        expect(phoneTF).toBeEnabled()
         await phoneTF.setValue(PhoneNO)
        
 
         const mobileTF=await browser.$('#mobile')
-        await expect(mobileTF).toBeEnabled()
+        expect(mobileTF).toBeEnabled()
         await mobileTF.setValue(MobileNO)
         
         const save_edit_Button=await browser.$('//input[@title="Save [Alt+S]"]')      // XPath
@@ -113,7 +113,7 @@ describe('Leads Module',()=>{
         // await expect(MOBILE_EDIT).toBeDefined()
 
         const MOB_CONT=await (await browser.$('//div[@id="editarea_Mobile"]/input[@id="txtbox_Mobile"]')).getAttribute("value")
-        await expect(MOB_CONT).toContain(MobileNO)
+        expect(MOB_CONT).toContain(MobileNO)
         
         // const LeadInfoPage=await (await browser.$('//span[contains(.,"Lead Information")]')).getText()
         // await expect(LeadInfoPage).toBePresent()
@@ -122,18 +122,18 @@ describe('Leads Module',()=>{
     it('Search Created Lead',async()=>{
         const LeadsModule=await browser.$('=Leads')
         await LeadsModule.click()
-        await expect(browser).toHaveTitleContaining('Administrator - Leads - vtiger CRM 5')
+        expect(browser).toHaveTitleContaining('Administrator - Leads - vtiger CRM 5')
 
         const criteriaDD=await $('#bas_searchfield')
-        await expect(criteriaDD).toHaveTextContaining('First Name')
+        expect(criteriaDD).toHaveTextContaining('First Name')
         await criteriaDD.selectByVisibleText('First Name')
 
         const searchTF=await $('[name="search_text"]')
-        await expect(searchTF).toBeEnabled()
+        expect(searchTF).toBeEnabled()
         await searchTF.setValue('Methaprian')
 
         const searchButton=await $('[name="submit"]')
-        await expect(searchButton).toBeClickable()
+        expect(searchButton).toBeClickable()
         await searchButton.click()
         
 
@@ -141,7 +141,7 @@ describe('Leads Module',()=>{
         // await expect(FIRSTNAME_Verify).toContain(firstName)
 
         const UPDATED_phoneNo=await (await $('//tr[@id="row_68"]//td/span[@vtfieldname="phone"]/..')).getText()
-        await expect(UPDATED_phoneNo).toContain(PhoneNO)
+        expect(UPDATED_phoneNo).toContain(PhoneNO)
 
     })
 })
