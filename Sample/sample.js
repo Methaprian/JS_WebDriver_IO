@@ -21,14 +21,18 @@ describe('SampleLaunch',()=>{
         // browser.pause(10000)
         const loginUN = await $('#username')
         await loginUN.setValue('admin')
-        await browser.pause(3000)
 
         const loginPWD = await $('#password')
         await loginPWD.setValue('admin')
-        await browser.pause(3000)
 
         const loginButton=await $('#login')
         await loginButton.click()
-        await browser.pause(3000)
+
+        await (await browser.$(`//a[contains(text(),'Activities')]`)).click()
+        await (await browser.$(`#add_activity`)).click()
+        await (await browser.$(`[name="start"]`)).setValue('03-03-2023')
+        await browser.pause(5000)
+        await (await browser.$(`[name="end"]`)).setValue('08-03-2023')
+        await browser.pause(5000)
     })
 })

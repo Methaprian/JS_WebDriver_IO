@@ -1,3 +1,4 @@
+// import { expect } from "chai";
 export const config = {
     //
     // ====================
@@ -205,6 +206,7 @@ export const config = {
      * @param {Object}         browser      instance of created browser/device session
      */
     // before: function (capabilities, specs) {
+    //     global.expect=expect
     // },
     /**
      * Runs before a WebdriverIO command gets executed.
