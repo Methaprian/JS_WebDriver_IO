@@ -1,3 +1,5 @@
+import { expect } from "chai"
+
 class Expenses{
     get addExpenses_BTN(){
         return $(`#add_expenses`)
@@ -13,13 +15,13 @@ class Expenses{
 
     async expenseSearch(exp_name){
 
-        expect(this.expensesTableLength_DD).toBeEnabled()
-        await (await this.expensesTableLength_DD).selectByVisibleText('100')
+        expect(await this.expensesTableLength_DD.waitForEnabled({timeout:5000})).to.be.true
+        await this.expensesTableLength_DD.selectByVisibleText('100')
 
-        expect(this.searchExpenses_TF).toBeEnabled()
-        await (await this.searchExpenses_TF).setValue(exp_name)
+        expect(await this.searchExpenses_TF).to.be.exist
+        await this.searchExpenses_TF.setValue(exp_name)
 
-        expect(browser.$(`//th[text()='Detail']/../../..//td[@class='sorting_1']`)).toHaveTextContaining(exp_name)
+        expect(await browser.$(`//th[text()='Detail']/../../..//td[@class='sorting_1']`)).to.equal(exp_name)
     }
 }
 export default new Expenses()

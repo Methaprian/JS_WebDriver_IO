@@ -32,12 +32,17 @@
  */
 
 describe('CRM_Settings : WorkFlow',async()=>{
+    
     let adminUserName="admin"
     let adminPassword="admin"
+
+    let WorkFlowName="Leads"
+    let Work_Desc="This Workflow is for Leads Module"
+
     it('Login into Application',async()=>{
         await browser.maximizeWindow()
         await browser.url('http://testingserver:8888/')
-        await console.log(browser.getTitle());
+        console.log(browser.getTitle());
         expect(browser).toHaveTitleContaining('vtiger CRM 5 - Commercial Open Source CRM')
         
         const loginUN = await browser.$('[name="user_name"]')
@@ -46,7 +51,7 @@ describe('CRM_Settings : WorkFlow',async()=>{
 
         const loginPWD = await browser.$('[name="user_password"]')
         // await expect(loginPWD).toBeDisabled()
-        await expect(loginPWD).toBeEnabled()
+        expect(loginPWD).toBeEnabled()
         await loginPWD.setValue(adminPassword)
 
         const loginButton = await browser.$('#submitButton')
@@ -54,7 +59,7 @@ describe('CRM_Settings : WorkFlow',async()=>{
         await loginButton.waitForClickable()
         await loginButton.click()
 
-        await console.log(browser.getTitle());
+        console.log(browser.getTitle());
         expect(browser).toHaveTitleContaining('Administrator - Home - vtiger CRM 5')
     
     })
@@ -65,7 +70,7 @@ describe('CRM_Settings : WorkFlow',async()=>{
         await settings.moveTo({x:10,y:10})
 
         const CRM_Settings=await browser.$('//a[text()="CRM Settings"]')
-        await expect(CRM_Settings).toBeDisplayed()
+        expect(CRM_Settings).toBeDisplayed()
         expect(CRM_Settings).toBeClickable()
         await CRM_Settings.click()
 
@@ -75,19 +80,13 @@ describe('CRM_Settings : WorkFlow',async()=>{
         expect(workflowLink).toBeClickable()
         await workflowLink.click()
 
-        await expect(browser).toHaveTitleContaining('Administrator - com_vtiger_workflow - vtiger CRM 5')
+        expect(browser).toHaveTitleContaining('Administrator - com_vtiger_workflow - vtiger CRM 5')
 
     })
-    
-    
-    
-    let WorkFlowName="Leads"
-    let Work_Desc="This Workflow is for Leads Module"
-
 
     it('Create New WorkFLow',async()=>{
         const new_workflowBtn=await browser.$('#new_workflow')
-        await expect(new_workflowBtn).toBeClickable()
+        expect(new_workflowBtn).toBeClickable()
         await new_workflowBtn.click()
 
         const forModule_RBtn=await browser.$('//input[@value="from_module"]')
@@ -107,22 +106,23 @@ describe('CRM_Settings : WorkFlow',async()=>{
         const Work_Desc_TF=await browser.$('[name="description"]')
         await Work_Desc_TF.waitForExist({timeout:5000})
         await Work_Desc_TF.setValue(Work_Desc)
-        
 
 
         const ON_FIRST_SAVE_RBtn=await browser.$('//td[text()="Only on the first save."]/..//input[@name="execution_condition"]')
-        const ONCE_RBtn=await browser.$('//td[text()="Until the first time the condition is true."]/..//input[@name="execution_condition"]')
-        const ON_EVERY_SAVE_RBtn=await browser.$('//td[text()="Every time the record is saved."]/..//input[@name="execution_condition"]')
-        const ON_MODIFY_RBtn=await browser.$('//td[text()="Every time a record is modified."]/..//input[@name="execution_condition"]')
-
         expect(ON_FIRST_SAVE_RBtn).toBeEnabled()
+
+        const ONCE_RBtn=await browser.$('//td[text()="Until the first time the condition is true."]/..//input[@name="execution_condition"]')
         expect(ONCE_RBtn).toBeEnabled()
+
+        const ON_EVERY_SAVE_RBtn=await browser.$('//td[text()="Every time the record is saved."]/..//input[@name="execution_condition"]')
         expect(ON_EVERY_SAVE_RBtn).toBeEnabled()
+
+        const ON_MODIFY_RBtn=await browser.$('//td[text()="Every time a record is modified."]/..//input[@name="execution_condition"]')
         expect(ON_MODIFY_RBtn).toBeEnabled()
+        
 
         await ON_EVERY_SAVE_RBtn.click()
 
-        // await browser.pause(3000);
         // await browser.$('//strong[text()="Summary"]/../..//input[@value="Save"]').waitForDisplayed({timeout:3000})
         const save_WorkFlow_Btn=await browser.$('//strong[text()="Summary"]/../..//input[@value="Save"]')
         await save_WorkFlow_Btn.waitForDisplayed({timeout:3000})
@@ -142,18 +142,6 @@ describe('CRM_Settings : WorkFlow',async()=>{
         expect(delete_Link).toBeExisting()
         await delete_Link.click()
 
-        // const alert_Verify=await browser.isAlertOpen()
-        // const alert_Text=await browser.getAlertText()
-        // await alert_Text.waitForDisplayed({timeout:5000})
-        // expect(alert_Verify).toHaveTextContaining('true')
-        // await browser.acceptAlert()
-
         await browser.keys("Enter")
-
-
-
-
-
-
     })
 })

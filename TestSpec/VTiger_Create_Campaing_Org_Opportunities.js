@@ -27,6 +27,10 @@
 describe('VTiger_Create_Campaing_Org_Opportunities',async()=>{
     let adminUserName="admin"
     let adminPassword="admin"
+
+    let camp_name='GO HP'
+
+    let org_name="Toyoto"
     
     it('Launch Browser and Login into Application',async()=>{
         await browser.maximizeWindow()
@@ -66,7 +70,7 @@ describe('VTiger_Create_Campaing_Org_Opportunities',async()=>{
         expect(browser).toHaveTitleContaining(`Administrator - Campaigns - vtiger CRM 5`)
     })
 
-    let camp_name='GO HP'
+    
     it('Click on Create Campaign Button and Fill necessary Details',async()=>{
         const new_Campaign_BTN=await browser.$(`//img[@title='Create Campaign...']`)
         expect(new_Campaign_BTN).toBeClickable()
@@ -85,7 +89,7 @@ describe('VTiger_Create_Campaing_Org_Opportunities',async()=>{
         expect(browser.$(`//span[contains(@class,'dvHeaderText')]`)).toHaveTextContaining(camp_name)
     })
 
-    let org_name="Toyoto"
+    
     it('Create Organization',async()=>{
         const org_link=await browser.$(`//td[@class='tabUnSelected']/a[.='Organizations']`)
         expect(org_link).toBeClickable()
@@ -100,9 +104,6 @@ describe('VTiger_Create_Campaing_Org_Opportunities',async()=>{
         expect(browser.$(`//span[.='Creating New Opportunity']`)).toBeDisplayed()
 
         const org_name_TF=await browser.$(`[name='potentialname']`)
-        
-
-
 
     })
 })

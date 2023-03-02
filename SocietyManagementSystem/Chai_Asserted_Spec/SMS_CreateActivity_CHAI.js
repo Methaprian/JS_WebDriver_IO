@@ -9,12 +9,13 @@
 7.Click on Options module
 8.click on logout button
 
- */
+*/
 
 import loginPage from "../POM/login.page.js";
 import homePage from "../POM/home.page.js";
 import activitiesPage from "../POM/activities.page.js";
 import createActivityPage from "../POM/createActivity.page.js";
+import { expect } from "chai";
 
 describe('Creating New Activity',async()=>{
     let url="http://testingserver/domain/Society_Management_System/admin/"
@@ -27,24 +28,23 @@ describe('Creating New Activity',async()=>{
     let end_date='09-03-2023'
     
     it('Launch Browser and Login into Application',async()=>{
+        
         await loginPage.login(url,username,password)
     })
 
     it('Navigate to Activities Module and Click on Add Activity',async()=>{
-        expect(homePage.activities_link).toBeClickable()
-
+        
+        expect(await homePage.activities_link.waitForClickable({timeout:5000})).to.be.true
         await homePage.activities_link.click()
 
-        expect(browser).toHaveUrlContaining(`activity`)
+        expect(await browser.getUrl()).to.contain(`activity`)
 
-        expect(activitiesPage.add_Activity_BTN).toBeDisplayed()
+        expect(activitiesPage.add_Activity_BTN).to.exist
 
         await activitiesPage.add_Activity_BTN.click()
-        expect(browser.$(`//div[.='Activity/Add new']`)).toBeDisplayed()
+        expect(browser.$(`//div[.='Activity/Add new']`)).to.exist
     })
 
-    
-    
     it('Create Activity with all Necessary Details',async()=>{
         await createActivityPage.ActivityCreation(act_title,act_desc,start_date,end_date)
     })

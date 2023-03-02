@@ -1,3 +1,6 @@
+import { expect } from "chai"
+import adminPage from "./admin.page.js"
+
 class CreateAdmin{
 
     get username_TF(){
@@ -20,22 +23,20 @@ class CreateAdmin{
     }
 
     async adminCreation(username,password,Name){
-        await this.username_TF.waitForEnabled({timeout:3000})
-        await (await this.username_TF).click()
+        expect(await this.username_TF).waitForDisplayed({timeout:5000}).to.be.true
+        await this.username_TF.click()
         await this.username_TF.setValue(username)
 
-        expect(this.password_TF).toBeEnabled()
-        await this.password_TF.waitForEnabled({timeout:3000})
+        expect(await this.password_TF).waitForDisplayed({timeout:5000}).to.be.true
         await this.password_TF.setValue(password)
 
-        expect(this.name_TF).toBeEnabled()
-        this.name_TF.waitForEnabled({timeout:3000})
+        expect(await  this.name_TF.waitForDisplayed({timeout:5000})).to.be.true
         await this.name_TF.setValue(Name)
 
-        expect(this.save_BTN).toBeClickable()
+        expect(await this.save_BTN.waitForClickable({timeout:5000})).to.be.true
         await this.save_BTN.click()
 
-
+        expect(await adminPage.addAdmin_BTN).to.exist
     }
 }
 export default new CreateAdmin()

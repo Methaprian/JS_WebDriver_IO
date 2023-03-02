@@ -1,3 +1,6 @@
+import { expect } from "chai"
+import studentPage from "./student.page"
+
 class CreateStudent{
     get studID_TF(){
         return $(`[name="student_id"]`)
@@ -31,27 +34,29 @@ class CreateStudent{
 
     async studentCreation(stud_ID,stud_FN,stud_MN,stud_LN,stud_YR,stud_SEC){
         
-        expect(browser.$(`//div[text()='Accounts/Student/Add new']`)).toBeDisplayed()
-        expect(this.studID_TF).toBeEnabled()
-        await (await this.studID_TF).setValue(stud_ID)
+        expect(await browser.$(`//div[text()='Accounts/Student/Add new']`).waitForDisplayed({timeout:5000}))
+        expect(await this.studID_TF).to.be.exist
+         this.studID_TF.setValue(stud_ID)
 
-        expect(this.stud_firstname_TF).toBeEnabled()
-        await (await this.stud_firstname_TF).setValue(stud_FN)
+        expect(await this.stud_firstname_TF).to.be.exist
+        await this.stud_firstname_TF.setValue(stud_FN)
 
-        expect(this.stud_middlename_TF).toBeEnabled()
-        await (await this.stud_middlename_TF).setValue(stud_MN)
+        expect(await this.stud_middlename_TF).to.be.exist
+        await this.stud_middlename_TF.setValue(stud_MN)
 
-        expect(this.stud_lastname_TF).toBeEnabled()
-        await (await this.stud_lastname_TF).setValue(stud_LN)
+        expect(await this.stud_lastname_TF).to.exist
+        await this.stud_lastname_TF.setValue(stud_LN)
 
-        expect(this.stud_year_DD).toBeEnabled()
-        await (await this.stud_year_DD).selectByVisibleText(stud_YR)
+        expect(await this.stud_year_DD).to.be.exist
+        await this.stud_year_DD.selectByVisibleText(stud_YR)
 
-        expect(this.stud_section_TF).toBeEnabled()
-        await (await this.stud_section).setValue(stud_SEC)
+        expect(await this.stud_section_TF).to.be.exist
+        await this.stud_section.setValue(stud_SEC)
 
-        expect(this.stud_save_BTN).toBeClickable()
-        await (await this.stud_save_BTN).click()
+        expect(await this.stud_save_BTN.waitForClickable({timeout:5000})).to.be.true
+        await this.stud_save_BTN.click()
+
+        expect(await studentPage.addStudent_BTN).to.exist
 
     }
 }

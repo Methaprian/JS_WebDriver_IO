@@ -13,27 +13,28 @@
 import loginPage from "../POM/login.page.js";
 import homePage from "../POM/home.page.js";
 import activitiesPage from "../POM/activities.page.js";
+import { expect } from "chai";
 
 describe('Deleting an Activity',async()=>{
     let url="http://testingserver/domain/Society_Management_System/admin/"
     let username='admin'
     let password='admin'
-    
+
     let act_name="Cricket"
+    
     it('Launch Browser and Login into Application',async()=>{
+        
         await loginPage.login(url,username,password)
     })
 
     it('Navigate to Activities Module',async()=>{
-        expect(homePage.activities_link).toBeExisting()
-        expect(homePage.activities_link).toBeDisplayed()
-        expect(homePage.activities_link).toBeClickable()
-
+        
+        expect(await homePage.activities_link.waitForClickable({timeout:5000})).to.be.true
         await homePage.activities_link.click()
 
-        expect(browser).toHaveUrlContaining(`activity`)
+        expect(await browser.getUrl()).to.contain(`activity`)
 
-        expect(activitiesPage.add_Activity_BTN).toBeDisplayed()
+        expect(await activitiesPage.add_Activity_BTN.waitForDisplayed({timeout:5000})).to.be.true
 
     })
 

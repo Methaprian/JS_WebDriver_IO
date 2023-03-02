@@ -25,6 +25,8 @@
 describe('Intergration between Vendors and Product Page',async()=>{
     let adminUserName="admin"
     let adminPassword="admin"
+
+    let vendor_NAME="CEAT"
     
     it('Launch Browser and Login into Application',async()=>{
         await browser.maximizeWindow()
@@ -64,7 +66,7 @@ describe('Intergration between Vendors and Product Page',async()=>{
 
     })
 
-    let vendor_NAME="CEAT"
+    
     it('Creating New Vendor',async()=>{
         const create_vendor_BTN=await browser.$(`//img[@title='Create Vendor...']`)
         expect(create_vendor_BTN).toBeEnabled()
@@ -80,7 +82,7 @@ describe('Intergration between Vendors and Product Page',async()=>{
         expect(save_button).toBeClickable()
         await save_button.click()
 
-        expect(browser.$(`#dtlview_Vendor Name`)).toHaveTextContaining(vendor_NAME)
+        expect(browser.$(`#dtlview_Vendor Name`)).toHaveText(vendor_NAME)
     })
 
     it('Navigate to Products Module and Clicking on Creat New Product Button',async()=>{
@@ -103,13 +105,9 @@ describe('Intergration between Vendors and Product Page',async()=>{
 
         const vendor_to_be_found=await browser.$(`//a[contains(.,'Vendor Name')]/../../..//td[contains(.,'${vendor_NAME}')]`)
 
-        expect(vendor_to_be_found).toHaveTextContaining(vendor_NAME)
+        expect(vendor_to_be_found).toHaveText(vendor_NAME)
 
         console.log(`=========> ${vendor_to_be_found.getText()}`);
-
-
-
-
     })
 
 })

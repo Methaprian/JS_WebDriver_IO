@@ -129,7 +129,7 @@ describe('Leads Module',()=>{
         await criteriaDD.selectByVisibleText('First Name')
 
         const searchTF=await $('[name="search_text"]')
-        expect(searchTF).toBeEnabled()
+        expect(searchTF).toBeDisplayed()
         await searchTF.setValue('Methaprian')
 
         const searchButton=await $('[name="submit"]')
@@ -140,8 +140,8 @@ describe('Leads Module',()=>{
         // const FIRSTNAME_Verify=await (await $('//tr[@id="row_68"]//td/span[@vtfieldname="phone"]/..')).getText()
         // await expect(FIRSTNAME_Verify).toContain(firstName)
 
-        const UPDATED_phoneNo=await (await $('//tr[@id="row_68"]//td/span[@vtfieldname="phone"]/..')).getText()
-        expect(UPDATED_phoneNo).toContain(PhoneNO)
+        const UPDATED_phoneNo=await $('//tr[@id="row_68"]//td/span[@vtfieldname="phone"]/..').getText()
+        expect(UPDATED_phoneNo).toEqual(PhoneNO)
 
     })
 })

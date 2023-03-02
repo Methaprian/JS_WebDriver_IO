@@ -1,3 +1,6 @@
+import { expect } from "chai"
+import homePage from "./home.page.js"
+
 class LoginPage{
 
     get username_TF(){
@@ -12,19 +15,25 @@ class LoginPage{
 
     //Business Libraries
 
-    async login(un,pwd){
-        expect(this.username_TF).toBeEnabled()
+    async login(url,un,pwd){
+        await browser.maximizeWindow()
+        await browser.url(url)
+
+        expect(await this.username_TF).to.exist
         await this.username_TF.setValue(un)
         
-        expect(this.password_TF).toBeEnabled()
+        expect(await this.password_TF).to.exist
         await this.password_TF.setValue(pwd)
         
-        expect(this.login_BTN).toBeEnabled()
+        expect(await this.login_BTN).to.exist
         await this.login_BTN.click()
 
-        expect(browser).toHaveUrlContaining(`home`)
-    }
+        expect(await homePage.home_link.waitForDisplayed({timeout:10000})).to.be.true
 
+        let actualURL=await browser.getUrl()
+        expect(actualURL).to.include('home.php')
+        // expect(browser).toHaveUrlContaining(`home`)
+    }
 }
 
 // module.exports=new LoginPage()

@@ -1,3 +1,6 @@
+import { expect } from "chai"
+import adminPage from "./admin.page.js"
+
 class HomePage{
     get home_link(){
         return $(`//a[contains(.,'Home')]`)
@@ -21,48 +24,44 @@ class HomePage{
         return $(`//a[contains(text(),'Transaction')]`)
     }
     get options_link(){
-        return $(`//a[contains(text(),'Options')]`)
+        return $(`//a[contains(.,'Options')]`)
     }
     get logout_link(){
-        return $(`//a[contains(text(),'Logout')]`)
+        return $(`//a[contains(.,'Logout')]`)
     }
 
     //Business Libraries
 
     async logout(){
-        expect(this.options_link).toBeDisplayed()
-        expect(this.options_link).toBeClickable()
+        expect(await this.options_link).to.be.exist
         await this.options_link.click()
 
-        await (await this.logout_link).waitForDisplayed({timeout:3000})
-        expect(this.logout_link).toBeClickable()
+        expect(await (await this.logout_link).waitForClickable({timeout:10000})).to.be.true
         await this.logout_link.click()
 
-        expect(browser).toHaveUrlContaining(`logout`)
+        expect(await browser.getUrl()).to.include(`logout.php`)
     }
 
     async admin_module(){
-        expect(this.accounts_link).toBeDisplayed()
-        expect(this.accounts_link).toBeClickable()
+        expect(await this.accounts_link).to.be.exist
         await this.accounts_link.click()
 
-        expect(this.admin_link).toBeDisplayed()
-        expect(this.admin_link).toBeClickable()
+        expect(await this.admin_link).to.be.exist
         await this.admin_link.click()
 
-        expect(browser).toHaveUrlContaining(`admin.php`)
+        expect(await adminPage.addAdmin_BTN.waitForDisplayed({timeout:5000})).to.be.true
+        const actualURL=await browser.getUrl()
+        expect(actualURL).to.include('admin.php')
     }
 
     async student_module(){
-        expect(this.accounts_link).toBeDisplayed()
-        expect(this.accounts_link).toBeClickable()
+        expect(await this.accounts_link.waitForDisplayed({timeout:5000})).to.be.true
         await this.accounts_link.click()
 
-        expect(this.student_link).toBeDisplayed()
-        expect(this.student_link).toBeClickable()
+        expect(await this.student_link.waitForDisplayed({timeout:5000})).to.be.true
         await this.student_link.click()
 
-        expect(browser).toHaveTitleContaining(`student`)
+        expect(await browser.getUrl()).to.include('student.php')
         
     }
 }

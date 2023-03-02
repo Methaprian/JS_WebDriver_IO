@@ -17,33 +17,36 @@ import homePage from "../POM/home.page.js";
 import expensesPage from "../POM/expenses.page.js";
 import createExpensesPage from "../POM/createExpenses.page.js";
 import transactionPage from "../POM/transaction.page.js";
+import { expect } from "chai";
 
 describe('Expenses Module',async()=>{
     let url="http://testingserver/domain/Society_Management_System/admin/"
     let username='admin'
     let password='admin'
-
+    
     let exp_name='Laptop';
     let price='45000';
     let start_year='2022';
-    let end_year='2024';
+    let end_year='2023';
     let sem='1st';
-    let deadline='25-03-2024'
-    
+    let deadline='25-03-2023'
+
+    let stud_ID='21201455'
+
     it('Launch Browser and Login into Application',async()=>{
         await loginPage.login(url,username,password)
     })
 
     it('Navigate to Expenses Module and Click on Add Expense Button',async()=>{
-        expect(homePage.expenses_link).toBeClickable()
+        expect(await homePage.expenses_link.waitForClickable({timeout:5000})).to.be.true
         await homePage.expenses_link.click()
 
-        expect(browser).toHaveUrlContaining('expenses')
+        expect(await browser.getUrl()).to.contain('expenses')
         
-        expect(expensesPage.addExpenses_BTN).toBeClickable()
+        expect(await expensesPage.addExpenses_BTN.waitForClickable({timeout:5000})).to.be.true
         await expensesPage.addExpenses_BTN.click()
 
-        expect(browser.$(`//div[.='Expenses/Add new']`)).toBeDisplayed()
+        expect(await browser.$(`//div[.='Expenses/Add new']`)).to.exist
     })
 
     
@@ -52,28 +55,27 @@ describe('Expenses Module',async()=>{
         await createExpensesPage.expenseCreation(exp_name,price,start_year,end_year,sem,deadline)
     })
 
-    let stud_ID='21201455'
+    
     it('Navigate to Transactions Module Enter Student ID and Enter the Student ID and Click on Search',async()=>{
-        expect(homePage.transaction_link).toBeEnabled()
+        expect(await homePage.transaction_link.waitForClickable({timeout:5000})).to.be.true
         await homePage.transaction_link.click()
-        expect(browser).toHaveTitleContaining('transaction')
+        expect(await browser.getUrl()).to.contain('transaction')
 
-        expect(transactionPage.studID_search_TF).toBeEnabled()
-        await  transactionPage.studID_search_TF.setValue(stud_ID)
+        expect(await transactionPage.studID_search_TF).to.exist
+        await transactionPage.studID_search_TF.setValue(stud_ID)
 
-        expect(transactionPage.search_BTN).toBeEnabled()
+        expect(await transactionPage.search_BTN).to.exist
         await transactionPage.search_BTN.click()
     })
 
     it('Check for the Created Expense',async()=>{
-        await transactionPage.status_DD.isDisplayed()
-        expect(transactionPage.status_DD).toBeDisplayed()
+        expect(await transactionPage.status_DD).to.exist
 
         await transactionPage.status_DD.selectByVisibleText('Available')
 
-        expect(transactionPage.expenses_DD).toBeEnabled()
+        expect(await transactionPage.expenses_DD.waitForEnabled({timeout:5000})).to.be.true
 
-        expect(transactionPage.expenses_DD).toHaveText(exp_name)
+        expect(await transactionPage.expenses_DD.getText()).to.contain(exp_name)
     })
 
     it('Logout of the Application',async()=>{
