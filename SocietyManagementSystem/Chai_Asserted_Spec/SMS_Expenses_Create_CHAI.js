@@ -20,6 +20,7 @@ import transactionPage from "../POM/transaction.page.js";
 import { expect } from "chai";
 
 describe('Expenses Module',async()=>{
+
     let url="http://testingserver/domain/Society_Management_System/admin/"
     let username='admin'
     let password='admin'
@@ -29,7 +30,7 @@ describe('Expenses Module',async()=>{
     let start_year='2022';
     let end_year='2023';
     let sem='1st';
-    let deadline='25-03-2023'
+    let deadline='03-25-2024' // mm-dd-yyyy
 
     let stud_ID='21201455'
 
@@ -48,13 +49,10 @@ describe('Expenses Module',async()=>{
 
         expect(await browser.$(`//div[.='Expenses/Add new']`)).to.exist
     })
-
-    
     
     it('Create Expense with all Necessary Details',async()=>{
         await createExpensesPage.expenseCreation(exp_name,price,start_year,end_year,sem,deadline)
     })
-
     
     it('Navigate to Transactions Module Enter Student ID and Enter the Student ID and Click on Search',async()=>{
         expect(await homePage.transaction_link.waitForClickable({timeout:5000})).to.be.true
@@ -70,11 +68,8 @@ describe('Expenses Module',async()=>{
 
     it('Check for the Created Expense',async()=>{
         expect(await transactionPage.status_DD).to.exist
-
         await transactionPage.status_DD.selectByVisibleText('Available')
-
         expect(await transactionPage.expenses_DD.waitForEnabled({timeout:5000})).to.be.true
-
         expect(await transactionPage.expenses_DD.getText()).to.contain(exp_name)
     })
 

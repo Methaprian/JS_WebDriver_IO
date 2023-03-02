@@ -28,7 +28,9 @@ describe('Expenses Module',async()=>{
     let start_year='2022';
     let end_year='2024';
     let sem='1st';
-    let deadline='25-03-2024'
+    let deadline='25-03-2024'   // dd-mm-yyyy
+
+    let stud_ID='21201455'
     
     it('Launch Browser and Login into Application',async()=>{
         await loginPage.login(url,username,password)
@@ -52,7 +54,7 @@ describe('Expenses Module',async()=>{
         await createExpensesPage.expenseCreation(exp_name,price,start_year,end_year,sem,deadline)
     })
 
-    let stud_ID='21201455'
+   
     it('Navigate to Transactions Module Enter Student ID and Enter the Student ID and Click on Search',async()=>{
         expect(homePage.transaction_link).toBeEnabled()
         await homePage.transaction_link.click()
