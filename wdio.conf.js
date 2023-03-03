@@ -31,8 +31,8 @@ export const config = {
         // 'path/to/excluded/files'
     ],
     suites:{
-        smokeSuite:['./SocietyManagementSystem/Chai_Asserted_Spec/SMS_CreateAdmin_CHAI.js','./SocietyManagementSystem/Chai_Asserted_Spec/SMS_CreateActivity_CHAI.js'],
-        regressionSuite:['./SocietyManagementSystem/Chai_Asserted_Spec/SMS_Expenses_Create_CHAI.js']
+        smokeSuite:['./SocietyManagementSystem/Chai_Asserted_Spec/SMS_CreateActivity_CHAI.js','./SocietyManagementSystem/Chai_Asserted_Spec/SMS_DeleteActivity_CHAI.js'],
+        regressionSuite:['./SocietyManagementSystem/Chai_Asserted_Spec/SMS_CreateAdmin_CHAI.js','./SocietyManagementSystem/Chai_Asserted_Spec/SMS_Expenses_Create_CHAI.js']
     },
     
     //
@@ -51,7 +51,7 @@ export const config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 10,
+    maxInstances: 1,
     
     //
     // If you have trouble getting all important capabilities together, check out the
