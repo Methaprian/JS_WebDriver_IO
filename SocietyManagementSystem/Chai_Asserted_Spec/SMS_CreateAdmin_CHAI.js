@@ -26,7 +26,7 @@ describe('Creating New Administrator',async()=>{
     let rn=Math.random()*(1000-100)+10
     let admin_un="SKM"+Math.trunc(rn)
     let admin_pwd="12345678"
-    let admin_name="Admin"
+    let admin_name="Admin"+Math.trunc(rn)
 
 
     it('Launch Browser and Login into Application',async()=>{

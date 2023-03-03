@@ -23,11 +23,11 @@ class CreateAdmin{
     }
 
     async adminCreation(username,password,Name){
-        expect(await this.username_TF).waitForDisplayed({timeout:5000}).to.be.true
+        expect(await this.username_TF.waitForDisplayed({timeout:5000})).to.be.true
         await this.username_TF.click()
         await this.username_TF.setValue(username)
 
-        expect(await this.password_TF).waitForDisplayed({timeout:5000}).to.be.true
+        expect(await this.password_TF.waitForDisplayed({timeout:5000})).to.be.true
         await this.password_TF.setValue(password)
 
         expect(await  this.name_TF.waitForDisplayed({timeout:5000})).to.be.true

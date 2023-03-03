@@ -30,6 +30,11 @@ export const config = {
     exclude: [
         // 'path/to/excluded/files'
     ],
+    suites:{
+        smokeSuite:['./SocietyManagementSystem/Chai_Asserted_Spec/SMS_CreateAdmin_CHAI.js','./SocietyManagementSystem/Chai_Asserted_Spec/SMS_CreateActivity_CHAI.js'],
+        regressionSuite:['./SocietyManagementSystem/Chai_Asserted_Spec/SMS_Expenses_Create_CHAI.js']
+    },
+    
     //
     // ============
     // Capabilities
@@ -47,6 +52,7 @@ export const config = {
     // from the same test should run tests.
     //
     maxInstances: 10,
+    
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
