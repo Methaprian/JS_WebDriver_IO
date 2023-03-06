@@ -1,5 +1,5 @@
 import { expect } from "chai"
-import studentPage from "./student.page"
+import studentPage from "./student.page.js"
 
 class CreateStudent{
     get studID_TF(){

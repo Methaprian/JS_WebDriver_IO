@@ -15,7 +15,7 @@ import homePage from "../POM/home.page.js";
 import activitiesPage from "../POM/activities.page.js";
 import { expect } from "chai";
 
-describe('Deleting an Activity',async()=>{
+describe('Deleting an Activity - smoke',async()=>{
     let url="http://testingserver/domain/Society_Management_System/admin/"
     let username='admin'
     let password='admin'

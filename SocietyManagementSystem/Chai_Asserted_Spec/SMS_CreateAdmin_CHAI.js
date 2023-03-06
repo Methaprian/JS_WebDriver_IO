@@ -18,7 +18,7 @@ import adminPage from "../POM/admin.page.js"
 import createAdminPage from "../POM/createAdmin.page.js"
 import { expect } from "chai"
 
-describe('Creating New Administrator',async()=>{
+describe('Creating New Administrator - regression',async()=>{
     let url="http://testingserver/domain/Society_Management_System/admin/"
     let username='admin'
     let password='admin'

@@ -17,7 +17,8 @@ import activitiesPage from "../POM/activities.page.js";
 import createActivityPage from "../POM/createActivity.page.js";
 import { expect } from "chai";
 
-describe('Creating New Activity',async()=>{
+describe('Creating New Activity - smoke',async()=>{
+    
     let url="http://testingserver/domain/Society_Management_System/admin/"
     let username='admin'
     let password='admin'

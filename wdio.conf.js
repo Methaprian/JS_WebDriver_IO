@@ -1,4 +1,11 @@
 import { expect } from "chai";
+
+const drivers = {
+    chrome: { version: '110.0.5481.77' }, // https://chromedriver.chromium.org/
+    firefox: { version: '0.32.2' }, // https://github.com/mozilla/geckodriver/releases
+    chromiumedge: { version: '110.0.1587.63' } // https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/
+}
+
 export const config = {
     //
     // ====================
@@ -24,15 +31,19 @@ export const config = {
     // will be called from there.
     //
     specs: [
-        './test/specs/**/*.js'
+        // './test/specs/**/*.js',
+        './SocietyManagementSystem/**/*.js'
     ],
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
     ],
     suites:{
-        smokeSuite:['./SocietyManagementSystem/Chai_Asserted_Spec/SMS_CreateActivity_CHAI.js','./SocietyManagementSystem/Chai_Asserted_Spec/SMS_DeleteActivity_CHAI.js'],
-        regressionSuite:['./SocietyManagementSystem/Chai_Asserted_Spec/SMS_CreateAdmin_CHAI.js','./SocietyManagementSystem/Chai_Asserted_Spec/SMS_Expenses_Create_CHAI.js']
+        smokeSuite:['./SocietyManagementSystem/Chai_Asserted_Spec/SMS_CreateActivity_CHAI.js',
+        './SocietyManagementSystem/Chai_Asserted_Spec/SMS_DeleteActivity_CHAI.js'],
+
+        regressionSuite:['./SocietyManagementSystem/Chai_Asserted_Spec/SMS_CreateAdmin_CHAI.js',
+        './SocietyManagementSystem/Chai_Asserted_Spec/SMS_Expenses_Create_CHAI.js']
     },
     
     //
@@ -51,34 +62,54 @@ export const config = {
     // and 30 processes will get spawned. The property handles how many capabilities
     // from the same test should run tests.
     //
-    maxInstances: 1,
+    maxInstances: 10,
     
     //
     // If you have trouble getting all important capabilities together, check out the
     // Sauce Labs platform configurator - a great tool to configure your capabilities:
     // https://saucelabs.com/platform/platform-configurator
     //
-    capabilities: [{
-    
+    // capabilities: [{
+    //     browserName: 'chrome',
+    //     port: 5555
+    // }],
+    capabilities: [
+
+        
         // maxInstances can get overwritten per capability. So if you have an in-house Selenium
         // grid with only 5 firefox instances available you can make sure that not more than
         // 5 instances get started at a time.
+        {
         maxInstances: 5,
-        //
         browserName: 'chrome',
         acceptInsecureCerts: true,
+        },
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
         // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
         // excludeDriverLogs: ['bugreport', 'server'],
 
-        'goog:chromeOptions': {
-            prefs: {
-              // 0 - Default, 1 - Allow, 2 - Block
-              'profile.managed_default_content_settings.notifications': 1
-            }
-        }
-    }],
+        // 'goog:chromeOptions': {
+        //     prefs: {
+        //       // 0 - Default, 1 - Allow, 2 - Block
+        //       'profile.managed_default_content_settings.notifications': 1
+        //     }
+        // }
+    
+
+    // {
+    //     maxInstances: 3,
+    //     // port: 5555,
+    //     browserName: 'firefox',
+    //     acceptInsecureCerts: true,
+    // },
+    // {
+    //     maxInstances: 2,
+    //     // port: 5555,
+    //     browserName: 'MicrosoftEdge',
+    //     acceptInsecureCerts: true,
+    // }
+],
     //
     // ===================
     // Test Configurations
@@ -126,7 +157,52 @@ export const config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['chromedriver'],
+    // services: [
+        
+    //     ['selenium-standalone'], 
+    // ],
+    services:
+    // ['selenium-standalone'],
+        
+    ['chromedriver'],
+    // ['geckodriver'],
+        
+        // ['selenium-standalone',
+        
+    //     ['selenium-standalone', 
+    //     {
+    //         logPath: 'logs',
+    //         installArgs: { drivers }, // drivers to install
+    //         args: { drivers } // drivers to use
+    //     }
+    // ],
+
+    //     [(function() {
+    //         if(process.env.browser===undefined || process.env.browser==="chrome") {
+    //             return "chromedriver";
+    //         } else if(process.env.browser==="firefox") {
+    //             return "geckodriver";
+    //         } else if(process.env.browser==="MicrosoftEdge") {
+    //             return "edgedriver";
+    //         }
+    //     })(), {
+    //         port: process.env.port ? parseInt(process.env.port): 9515
+    //     }]
+    // ],
+        
+        
+        
+    //     ['selenium-standalone', 
+    //     { drivers: { firefox: '0.32.2', chrome: true, chromiumedge: 'latest' } },
+    //     {
+    //         logPath: './temp',
+    //         args: {
+    //             version: "4.4.0",
+    //             seleniumArgs: ['-host', '127.0.0.1','-port', '5555']
+    //         },
+    //     }
+    // // ]
+    // ],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -148,7 +224,15 @@ export const config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec'],
+    reporters: 
+    ['spec',
+
+    ['allure', {
+        outputDir: 'allure-results',
+        disableWebdriverStepsReporting: true,
+        disableWebdriverScreenshotsReporting: false,
+    }]
+],
 
 
     
@@ -254,8 +338,15 @@ export const config = {
      * @param {Boolean} result.passed    true if test has passed, otherwise false
      * @param {Object}  result.retries   informations to spec related retries, e.g. `{ attempts: 0, limit: 0 }`
      */
-    // afterTest: function(test, context, { error, result, duration, passed, retries }) {
+    afterTest:
+    async function (step, scenario, { error, duration, passed }, context) {
+        if (error) {
+          await browser.takeScreenshot();
+        }
+      } 
+    // async function(test, context, { error, result, duration, passed, retries }) {
     // },
+
 
 
     /**

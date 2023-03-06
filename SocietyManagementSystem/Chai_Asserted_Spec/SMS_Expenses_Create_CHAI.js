@@ -19,7 +19,7 @@ import createExpensesPage from "../POM/createExpenses.page.js";
 import transactionPage from "../POM/transaction.page.js";
 import { expect } from "chai";
 
-describe('Expenses Module',async()=>{
+describe('Expenses Module - regression',async()=>{
 
     let url="http://testingserver/domain/Society_Management_System/admin/"
     let username='admin'
@@ -70,7 +70,7 @@ describe('Expenses Module',async()=>{
         expect(await transactionPage.status_DD).to.exist
         await transactionPage.status_DD.selectByVisibleText('Available')
         expect(await transactionPage.expenses_DD.waitForEnabled({timeout:5000})).to.be.true
-        expect(await transactionPage.expenses_DD.getText()).to.include(exp_name)
+        expect(await transactionPage.expenses_DD.getText()).to.contains(exp_name)
     })
 
     it('Logout of the Application',async()=>{
