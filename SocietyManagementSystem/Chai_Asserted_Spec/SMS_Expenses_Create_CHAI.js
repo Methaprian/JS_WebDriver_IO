@@ -70,6 +70,7 @@ describe('Expenses Module - regression',async()=>{
         expect(await transactionPage.status_DD).to.exist
         await transactionPage.status_DD.selectByVisibleText('Available')
         expect(await transactionPage.expenses_DD.waitForEnabled({timeout:5000})).to.be.true
+        // expect(await transactionPage.expenses_DD.selectByVisibleText(exp_name)).to.be.null
         expect(await transactionPage.expenses_DD.getText()).to.contains(exp_name)
     })
 

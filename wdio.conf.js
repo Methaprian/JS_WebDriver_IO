@@ -32,7 +32,8 @@ export const config = {
     //
     specs: [
         // './test/specs/**/*.js',
-        './SocietyManagementSystem/**/*.js'
+        './SocietyManagementSystem/**/*.js',
+        // './Assignments/**/*.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -82,8 +83,9 @@ export const config = {
         {
         maxInstances: 5,
         browserName: 'chrome',
+        // port:5555,
         acceptInsecureCerts: true,
-        },
+        // },
         // If outputDir is provided WebdriverIO can capture driver session logs
         // it is possible to configure which logTypes to include/exclude.
         // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
@@ -95,14 +97,15 @@ export const config = {
         //       'profile.managed_default_content_settings.notifications': 1
         //     }
         // }
+    },
     
 
-    // {
-    //     maxInstances: 3,
-    //     // port: 5555,
-    //     browserName: 'firefox',
-    //     acceptInsecureCerts: true,
-    // },
+    {
+        maxInstances: 3,
+        // port: 5555,
+        browserName: 'firefox',
+        acceptInsecureCerts: true,
+    },
     // {
     //     maxInstances: 2,
     //     // port: 5555,
@@ -161,21 +164,24 @@ export const config = {
         
     //     ['selenium-standalone'], 
     // ],
-    services:
+    services:[
     // ['selenium-standalone'],
         
-    ['chromedriver'],
+    // ['chromedriver'],
     // ['geckodriver'],
         
         // ['selenium-standalone',
         
-    //     ['selenium-standalone', 
-    //     {
-    //         logPath: 'logs',
-    //         installArgs: { drivers }, // drivers to install
-    //         args: { drivers } // drivers to use
-    //     }
-    // ],
+        // ['selenium-standalone', 
+        // {
+        //     logPath: 'logs',
+        //     installArgs: { drivers }, // drivers to install
+        //     args: { drivers } // drivers to use
+        // }
+
+        ['selenium-standalone', { drivers: { firefox: true, chrome: true, chromiumedge: true } }]
+        
+    ],
 
     //     [(function() {
     //         if(process.env.browser===undefined || process.env.browser==="chrome") {
